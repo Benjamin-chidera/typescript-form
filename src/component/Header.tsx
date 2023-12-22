@@ -1,18 +1,18 @@
-import React, {ReactNode} from "react";
+import React, { ReactNode } from "react";
 
-type pic = {
-  image: {
+type Image = {
+  img: {
     src: string;
     alt: string;
   };
-  children: ReactNode
+  children: ReactNode;
 };
 
-export const Header = ({ image, children }: pic) => {
+export const Header = ({ img, children }: Image) => {
   return (
-    <div>
-      <img src={image.src} alt={image.alt} />
+    <header>
+      <img src={img.src} alt={img.alt} />
       {children}
-    </div>
+    </header>
   );
 };

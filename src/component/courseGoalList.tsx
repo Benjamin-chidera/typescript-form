@@ -1,21 +1,50 @@
+import React, { ReactNode } from "react";
 import { CourseGoal } from "./CourseGoal";
-import { CourseGoal as CourseGoals } from "../App";
+import { CourseGoals } from "../App";
+import { InfoBox } from "./InfoBox";
 
-type CourseGoal = {
+type MyGoals = {
   goals: CourseGoals[];
-  deleteGoal: (id: number) => void;
+  handleDeleteGoal: (id: number) => void;
 };
 
-export const CourseGoalList = ({ goals, deleteGoal }: CourseGoal) => {
+export const CourseGoalList = ({ goals, handleDeleteGoal }: MyGoals) => {
+  if (goals.length === 0) {
+    return (
+      <InfoBox mode="hint" >
+        You have no course goals yet. Start adding some!
+      </InfoBox>
+    );
+  }
+
+  let warningBox: ReactNode;
+
+  if (goals.length >= 4) {
+    warningBox = (
+      <InfoBox mode="warning" severity="medium">
+        You're collecting a lot of goals. Don't put too much on your plate
+      </InfoBox>
+    );
+  }
+
   return (
-    <ul>
-      {goals.map((item) => (
-        <li key={item.id}>
-          <CourseGoal title={item.title} deleteGoal={deleteGoal} id={item.id}>
-            <p>{item.description}</p>
-          </CourseGoal>
-        </li>
-      ))}
-    </ul>
+    <div>
+      {warningBox}
+      <ul>
+        {goals.map(({ id, title, description }) => {
+          return (
+            <li key={id}>
+              <CourseGoal
+                title={title}
+                handleDeleteGoal={handleDeleteGoal}
+                id={id}
+              >
+                {description}
+              </CourseGoal>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 };

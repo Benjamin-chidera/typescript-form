@@ -1,10 +1,10 @@
-import { FormEvent, useRef } from "react";
+import React, { FormEvent, SyntheticEvent, useRef } from "react";
 
-type NewGoalProp = {
+type NewGoalProps = {
   onAddGoal: (goal: string, summary: string) => void;
 };
 
-export const NewGoal = ({ onAddGoal }: NewGoalProp) => {
+export const NewGoal = ({ onAddGoal }: NewGoalProps) => {
   const goal = useRef<HTMLInputElement>(null);
   const summary = useRef<HTMLInputElement>(null);
 
@@ -12,13 +12,12 @@ export const NewGoal = ({ onAddGoal }: NewGoalProp) => {
     e.preventDefault();
 
     const enteredGoal = goal.current!.value;
-    const enteredSummary = summary.current!.value;
+    const enterSummary = summary.current!.value;
 
-    e.currentTarget.reset()
+    e.currentTarget.reset();
 
-    onAddGoal(enteredGoal, enteredSummary);
+    onAddGoal(enteredGoal, enterSummary);
   };
-
   return (
     <form onSubmit={handleSubmit}>
       <p>
